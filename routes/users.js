@@ -15,8 +15,10 @@ router.post('/register', ( req, res ) => {
         lname : lname
     })
 
-res.json(newUser)
-
+    User.createUser( newUser, ( err, user ) => {
+        if( err ) throw err;
+        return res.redirect('/main');
+    });
 })
 
 module.exports = router;

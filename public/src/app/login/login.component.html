@@ -1,22 +1,19 @@
-<div class="container">
 
-    <div id="login">
-
-      <form action="javascript:void(0);" method="get">
-
-        <fieldset class="clearfix">
-
-          <p><span class="fontawesome-user"></span><input type="text" value="Username" onBlur="if(this.value == '') this.value = 'Username'" onFocus="if(this.value == 'Username') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
-          <p><span class="fontawesome-lock"></span><input type="password"  value="Password" onBlur="if(this.value == '') this.value = 'Password'" onFocus="if(this.value == 'Password') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
-          <p><input type="submit" value="Sign In"></p>
-
-        </fieldset>
-
+<div class="container-fluid">
+  <div class="row">
+    <div class="login col-md-12">
+      <form>
+        <h2>Sign in Your Account</h2>
+        <input type="text" placeholder="Username" class="input col-md-10 offset-1">
+        <input type="password" placeholder="Password" class="input col-md-10 offset-1">
+        <button class="submit btn btn-primary col-md-10 offset-1">Login</button>
+        <p>Not a member? <a href="#">Sign up now</a><span class="fontawesome-arrow-right"></span></p>
       </form>
 
-      <p>Not a member? <a href="#">Sign up now</a><span class="fontawesome-arrow-right"></span></p>
 
-    </div> <!-- end login -->
-
+    </div>
   </div>
+</div>
+
+
 
