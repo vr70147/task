@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const cors = require('cors');
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 mongoose.Promise = Promise;  
@@ -13,7 +14,7 @@ mongoose.connect('mongodb://localhost/tasks', err => { err ? console.log('could 
 });
 const routes = require('./routes/index');
 const users = require('./routes/users');
-
+app.use(cors({origin: 'http://localhost:4200'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());

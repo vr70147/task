@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
   onSubmit( regForm: NgForm): void {
-    this.httpClient.post(`localhost:3000/register`, regForm.value)
+    this.httpClient.post(`http://localhost:3000/users/register`, regForm.value)
       .subscribe(
         res => {
           console.log(res);

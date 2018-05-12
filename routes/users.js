@@ -17,7 +17,7 @@ router.post('/register', ( req, res ) => {
 
     User.createUser( newUser, ( err, user ) => {
         if( err ) throw err;
-        return res.redirect('/main');
+        return res.json(newUser);
     });
 })
 
