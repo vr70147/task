@@ -1,6 +1,7 @@
 
 <div class="container-fluid">
     <div class="row">
+
       <div class="login col-md-12">
         <form class="form-group" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
           <h2>Fill Form To Sign Up</h2>
@@ -17,7 +18,7 @@
           <input type="text"  ngModel name="lname" #lname="ngModel" placeholder="&#xf2c0; Last Name" class="input col-md-10 offset-1" required>
           <div class="alert alert-danger col-md-10 offset-1" *ngIf="lname.touched && !lname.valid">Please Enter last name</div>
 
-          <button class="submit btn btn-primary col-md-10 offset-1">Login</button>
+          <button class="submit btn btn-primary col-md-10 offset-1" (click)="validateUserInput()">Login</button>
         </form>
       </div>
     </div>

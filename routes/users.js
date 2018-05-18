@@ -1,24 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const passport = require('passport');
 
-router.post('/register', ( req, res ) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    const fname = req.body.fname;
-    const lname = req.body.lname;
+router.get('/session', ( req, res ) => {
+	User.find({}, (err, cart) => {
+		return res.send(req.session);
+	})
+});
 
-    const newUser = new User({
-        email : email,
-        password : password,
-        fname : fname,
-        lname : lname
-    })
+router.post('/register', passport.authenticate('local-signup', {
+    failureRedirect: 'http://localhost:3000/errors',
+    successRedirect: 'http://localhost:3000/success'
 
-    User.createUser( newUser, ( err, user ) => {
-        if( err ) throw err;
-        return res.json(newUser);
-    });
-})
+}));
 
 module.exports = router;

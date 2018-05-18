@@ -9,15 +9,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   ngOnInit() {
   }
+  validateUserInput = () => {
+    const error = document.querySelector('.alert');
+    console.log(error);
+  }
+
   onSubmit( regForm: NgForm): void {
     this.httpClient.post(`http://localhost:3000/users/register`, regForm.value)
       .subscribe(
         res => {
-          console.log(res);
+          if ( res ) {
+            location.href = 'http://localhost:4200/main';
+          }
         },
         err => {
           console.log('Error occured');

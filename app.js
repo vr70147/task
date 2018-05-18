@@ -7,13 +7,15 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+
 mongoose.Promise = Promise;  
 
 mongoose.connect('mongodb://localhost/tasks', err => { err ? console.log('could not connect server') : app.listen('3000', () => { console.log('SERVER UP')})
 });
 const routes = require('./routes/index');
 const users = require('./routes/users');
+
 app.use(cors({origin: 'http://localhost:4200'}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -36,6 +38,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+require('./passport/passport')(passport);
 
 app.use('/', routes);
 app.use('/users', users);
