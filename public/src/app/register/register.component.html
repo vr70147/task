@@ -1,27 +1,25 @@
 
 <div class="container-fluid">
     <div class="row">
-
       <div class="login col-md-12">
         <form class="form-group" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
           <h2>Fill Form To Sign Up</h2>
+          <p class="isError">{{ isError }}</p>
 
           <input type="email" ngModel name="email" #email="ngModel" placeholder="&#xf0e0; Username" class="input col-md-10 offset-1" required>
-          <div class="alert alert-danger col-md-10 offset-1" *ngIf="email.touched && !email.valid"> Please Enter a valid email</div>
+          <div #alert class="alert alert-danger col-md-10 offset-1" *ngIf="email.touched && !email.valid"> {{ x[0] }}</div>
 
           <input type="password" ngModel name="password" #password="ngModel" placeholder="&#xf023; Password" class="input col-md-10 offset-1" required>
-          <div class="alert alert-danger col-md-10 offset-1" *ngIf="password.touched && !password.valid"> Please Enter password</div>
+          <div #alert class="alert alert-danger col-md-10 offset-1" *ngIf="password.touched && !password.valid"> {{ x[1] }}</div>
 
           <input type="text" ngModel name="fname" #fname="ngModel" placeholder="&#xf007; First Name" class="input col-md-10 offset-1" required>
-          <div class="alert alert-danger col-md-10 offset-1" *ngIf="fname.touched && !fname.valid">Please Enter first name</div>
+          <div #alert class="alert alert-danger col-md-10 offset-1" *ngIf="fname.touched && !fname.valid">{{ x[2] }}</div>
 
-          <input type="text"  ngModel name="lname" #lname="ngModel" placeholder="&#xf2c0; Last Name" class="input col-md-10 offset-1" required>
-          <div class="alert alert-danger col-md-10 offset-1" *ngIf="lname.touched && !lname.valid">Please Enter last name</div>
+          <input type="text" ngModel name="lname" #lname="ngModel" placeholder="&#xf2c0; Last Name" class="input col-md-10 offset-1" required>
+          <div #alert class="alert alert-danger col-md-10 offset-1" *ngIf="lname.touched && !lname.valid">{{ x[3] }}</div>
 
-          <button class="submit btn btn-primary col-md-10 offset-1" (click)="validateUserInput()">Login</button>
+          <button class="submit btn btn-primary col-md-10 offset-1">Login</button>
         </form>
       </div>
     </div>
   </div>
-  <!-- method="POST" -->
-  <!-- action="localhost:3000/register" -->

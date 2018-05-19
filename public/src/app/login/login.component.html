@@ -2,10 +2,15 @@
 <div class="container-fluid">
   <div class="row">
     <div class="login col-md-12">
-      <form>
+      <form #loginForm="ngForm" (ngSubmit)="loginSub(loginForm)">
         <h2>Sign in Your Account</h2>
-        <input type="text" placeholder="Username" class="input col-md-10 offset-1">
-        <input type="password" placeholder="Password" class="input col-md-10 offset-1">
+        <p>{{ errMsg }}</p>
+        <input type="text" ngModel name="email" #email="ngModel" placeholder="Username" class="input col-md-10 offset-1" required>
+        <div #alert class="alert alert-danger col-md-10 offset-1" *ngIf="email.touched && !email.valid">email field is empty</div>
+
+        <input type="password" ngModel name="password" #password="ngModel" placeholder="Password" class="input col-md-10 offset-1" required>
+        <div #alert class="alert alert-danger col-md-10 offset-1" *ngIf="password.touched && !password.valid">password field is empty</div>
+
         <button class="submit btn btn-primary col-md-10 offset-1">Login</button>
         <p>Not a member? <a href="http://localhost:4200/register">Sign up now</a><span class="fontawesome-arrow-right"></span></p>
       </form>

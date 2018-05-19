@@ -38,3 +38,7 @@
   margin-bottom: 20px;
   font-size: 20px;
 }
+.isError {
+  font-size: 23px;
+  color: red !important;
+}

@@ -14,6 +14,10 @@ UserSchema.methods.encryptPassword = password => {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 }
 
+UserSchema.methods.validPassword = candidatePassword => {
+	return bcrypt.compareSync(candidatePassword, this.password);
+}
+
 const User = mongoose.model('users', UserSchema); 
 module.exports = User;
 
