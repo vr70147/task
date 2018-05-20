@@ -5,4 +5,10 @@
 .logo {
   margin-left: 1%;
   line-height: 80px;
+  display: inline-block;
+}
+.logout {
+  float: right;
+  margin-right: 1%;
+  line-height: 75px;
 }

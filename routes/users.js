@@ -5,9 +5,17 @@ const passport = require('passport');
 
 router.get('/session', ( req, res ) => {
 	User.find({}, (err, cart) => {
-		return res.json(req.session);
+		return res.send(req.session);
 	})
 });
+
+router.get('/logout', ( req, res ) => {
+	req.session.destroy( err => {
+		if (err) throw err
+	})
+	return res.json({'msg':'session destroyed'});
+  });
+
 router.get('/errors', (req, res) => {
 	const errMsg = { msgError: 'username or password are incorrect'};
 	return res.json(errMsg);
@@ -19,8 +27,8 @@ router.get('/success', (req, res) => {
 });
 
 router.post('/register', passport.authenticate('local-signup', {
-    failureRedirect: '/errors',
-    successRedirect: '/success'
+    failureRedirect: '/users/errors',
+    successRedirect: '/users/success'
 
 }));
 router.post('/login', passport.authenticate('local-login', {

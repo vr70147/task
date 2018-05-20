@@ -10,13 +10,18 @@ const UserSchema = new Schema({
     lname: String
 })
 
-UserSchema.methods.encryptPassword = password => {
+UserSchema.methods.encryptPassword = function(password){
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 }
 
-UserSchema.methods.validPassword = candidatePassword => {
-	return bcrypt.compareSync(candidatePassword, this.password);
-}
+UserSchema.methods.validPassword = function(candidatePassword){
+    if(this.password != null) {
+        return bcrypt.compareSync(candidatePassword, this.password);
+    }
+    else {
+        return false
+    };
+};
 
 const User = mongoose.model('users', UserSchema); 
 module.exports = User;

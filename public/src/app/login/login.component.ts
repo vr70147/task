@@ -17,10 +17,10 @@ export class LoginComponent implements OnInit {
     if ( logForm.valid ) {
     this.httpClient.post(`http://localhost:3000/users/login`, logForm.value)
       .subscribe(
-        res => {
+        (res: any) => {
           if ( res.msgSuccess ) {
 
-            location.href = 'http://localhost:4200/';
+            location.href = 'http://localhost:4200/main';
           }
           this.errMsg = res.msgError;
         },

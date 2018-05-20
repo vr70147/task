@@ -37,4 +37,8 @@ form p, h2 {
   margin-top: 12px;
   font-size: 20px;
 }
+.isError {
+  font-size: 23px;
+  color: red !important;
+}
 

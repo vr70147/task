@@ -4,7 +4,7 @@
     <div class="login col-md-12">
       <form #loginForm="ngForm" (ngSubmit)="loginSub(loginForm)">
         <h2>Sign in Your Account</h2>
-        <p>{{ errMsg }}</p>
+        <p class="isError">{{ errMsg }}</p>
         <input type="text" ngModel name="email" #email="ngModel" placeholder="Username" class="input col-md-10 offset-1" required>
         <div #alert class="alert alert-danger col-md-10 offset-1" *ngIf="email.touched && !email.valid">email field is empty</div>
 
