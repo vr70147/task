@@ -4,7 +4,11 @@ const User = require('../models/user');
 const passport = require('passport');
 
 router.get('/session', ( req, res ) => {
-	User.find({}, (err, cart) => {
+	User.find({}, (err, user) => {
+		if(!req.session.passport)
+			req.session.passport = {'user': user};
+		else if(req.session.destroy)
+			delete req.session.passport;
 		return res.send(req.session);
 	})
 });
