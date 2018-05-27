@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const auth = require('./auth/passport');
 
 mongoose.Promise = Promise;  
 
@@ -16,8 +17,10 @@ mongoose.connect('mongodb://localhost/tasks', err => { err ? console.log('could 
 const routes = require('./routes/index');
 const users = require('./routes/users');
 
-app.use(cors({origin: 'http://localhost:4200'}));
-app.use(bodyParser.urlencoded({ extended: true }));
+passport.use('local', new LocalStrategy(auth.login));
+passport.serializeUser(auth.serializeUser);
+passport.deserializeUser(auth.deserializeUser);
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static('public'));
@@ -38,7 +41,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-require('./passport/passport')(passport);
 
 app.use('/', routes);
 app.use('/users', users);

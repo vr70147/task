@@ -4,49 +4,54 @@ const User = require('../models/user');
 const passport = require('passport');
 
 router.get('/session', ( req, res ) => {
-	User.find({}, (err, user) => {
+	User.find({}, (err, cart) => {
 		return res.send(req.session);
 	})
 });
 
-router.get('/logout', ( req, res ) => {
-	req.session.destroy( err => {
-		if (err) throw err
-	})
-	console.log(req.session);
+router.post('/logout', ( req, res ) => {
+  req.session.destroy( err => {
+  	if (err) throw err
+  })
+  return res.redirect('/');
+});
+
+router.post('/login', passport.authenticate('local', { 
+	failureRedirect : 'http://localhost:3000/users/session'
+}), ( req, res ) => {
+	if(req.session.passport.user.role) {
+		return res.redirect('/session');
+	};
+	if(!req.session.passport.user.role) {
+		return res.redirect('/session');
+	};
+});
+
+router.post('/register',( req, res ) => {
+	const id = req.body.id;
+	const email = req.body.email;
+	const password = req.body.password;
+	const password2 = req.body.password2;
+	const city = req.body.city;
+	const street = req.body.street;
+	const fname = req.body.fname;
+	const lname = req.body.lname;
+		
 	
-	// delete req.session.passport.user;
-	return res.json({'msg':'session destroyed'});
-  });
-
-router.get('/errors', isLoggedIn, (req, res) => {
-	const errMsg = { msgError: 'username or password are incorrect'};
-	return res.json(errMsg);
-});
-router.get('/success', isLoggedIn, (req, res) => {
-	const successMsg = { msgSuccess: '1'};
-	return res.json(successMsg);
-
-});
-
-router.post('/register', passport.authenticate('local-signup', {
-    failureRedirect: '/users/errors',
-    successRedirect: '/users/success'
-
-}));
-router.post('/login', passport.authenticate('local-login', {
-    failureRedirect: '/users/errors',
-    successRedirect: '/users/success'
-
-}));
-
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
-	  console.log('yes!!!!')
-	  return next();
-	}
-	console.log('nooooo!!!!')
-	return res.sendStatus(401);
-};
+	const newUser = new User({
+		id: id,
+		email: email,
+		password: password,
+		city: city,
+		street: street,
+		fname: fname,
+		lname: lname
+	});
+		User.createUser( newUser, ( err, user ) => {
+			console.log('register');
+			if( err ) throw err;
+			return res.redirect('http://localhost:3000/users/session');
+		});
+	});
 
 module.exports = router;
