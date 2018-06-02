@@ -8,24 +8,25 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   errMsg: string;
   constructor(private httpClient: HttpClient) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   loginSub( logForm: NgForm) {
     if ( logForm.valid ) {
     this.httpClient.post(`http://localhost:3000/users/login`, logForm.value)
       .subscribe(
         (res: any) => {
-          if ( res.msgSuccess ) {
-
+          console.log(res);
+          if ( res.msgSuccess === '1' ) {
             location.href = 'http://localhost:4200/main';
+          } else if (res === false) {
+            this.errMsg = res.msgError;
           }
-          this.errMsg = res.msgError;
         },
         err => {
-          console.log('Error occured');
+          console.log(err);
         }
       );
     }

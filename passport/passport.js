@@ -5,16 +5,14 @@ const passport = require('passport');
 module.exports = passport => {
 
     passport.serializeUser(function( user, done ){
-        console.log('serialized')
-        done( null, user.id );
+        done( null, user );
     });
     passport.deserializeUser(function( id, done ){
         User.findById(id, (err, user) => {
-            console.log(user);
             done( false, user );
         })
     });
-    passport.use('local-signup', new LocalStrategy({
+    passport.use('local.signup', new LocalStrategy({
         usernameField : 'email',
         passwordField : 'password',
         passReqToCallback : true
@@ -39,13 +37,12 @@ module.exports = passport => {
                 });
             });
         }));
-    passport.use('local-login', new LocalStrategy({
+    passport.use('local.login', new LocalStrategy({
         usernameField : 'email',
         passwordField : 'password',
         passReqToCallback : true
     },
-    (req, email, password, done, next) => {
-        
+    (req, email, password, done) => {
         User.findOne({ 'email' :  email }, (err, user) => {
             
             if (err)
@@ -55,12 +52,10 @@ module.exports = passport => {
 
             if(!user.validPassword(req.body.password))
                 return done(null, false);
-            done(null, user);
-            console.log(req.session);
-            return;
+            
+            return done(null, user);
+            
         });
-
     }));
-
 };
          
